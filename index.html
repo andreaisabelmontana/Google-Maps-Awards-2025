@@ -1,177 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Map Site</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ENCORE · the map of live music memory</title>
+  <meta name="description" content="Pin the shows that mattered. Relive the ones you missed. A map of live music memory." />
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet" />
 
-        header {
-            text-align: center;
-            color: white;
-            padding: 40px 20px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .map-container {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            margin-top: 30px;
-        }
-
-        .map-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .map-header h2 {
-            color: #333;
-            font-size: 1.5rem;
-        }
-
-        .location-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        .map-wrapper {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .map-wrapper iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-            display: block;
-        }
-
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        footer {
-            text-align: center;
-            color: white;
-            padding: 40px 20px;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .map-wrapper iframe {
-                height: 300px;
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Explore the World</h1>
-            <p>An interactive map powered by Google Maps</p>
-        </header>
-
-        <div class="map-container">
-            <div class="map-header">
-                <h2>Featured Location</h2>
-                <span class="location-badge">New York City</span>
-            </div>
-            <div class="map-wrapper">
-                <!-- Google Maps Embed - Change the location by updating the iframe src -->
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30596073366!2d-74.25986652089301!3d40.69714941680757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1699999999999!5m2!1sen!2s"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
-
-        <div class="info-cards">
-            <div class="card">
-                <h3>Interactive Map</h3>
-                <p>Zoom in, zoom out, and explore the area. Click and drag to navigate around the map.</p>
-            </div>
-            <div class="card">
-                <h3>Street View</h3>
-                <p>Drop the yellow person icon to explore streets at ground level with 360-degree views.</p>
-            </div>
-            <div class="card">
-                <h3>Get Directions</h3>
-                <p>Click "View larger map" to open in Google Maps and get directions to this location.</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>Built with Google Maps Embed API</p>
-        </footer>
+  <!-- ===== Intro splash (cassette → stage) ===== -->
+  <div class="splash" id="splash" data-phase="cassette">
+    <img class="splash-bg cassette" src="assets/cassette.webp" alt="" />
+    <img class="splash-bg stage" src="assets/stage.webp" alt="" />
+    <div class="splash-grain"></div>
+    <div class="splash-content">
+      <span class="splash-spark s1">✦</span>
+      <span class="splash-spark s2">✧</span>
+      <span class="splash-spark s3">✦</span>
+      <p class="splash-kicker" id="splashKicker">▸ loading the tape</p>
+      <h1 class="splash-word">ENCORE</h1>
+      <p class="splash-tag">the map of live music memory</p>
+      <button class="splash-play" id="splashPlay">▶ press play</button>
+      <p class="splash-skip" id="splashSkip">or tap anywhere to skip</p>
     </div>
+  </div>
+
+  <!-- grain overlay over whole app -->
+  <div class="grain-overlay"></div>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◉</span>
+      <span class="brand-word">ENCORE</span>
+    </div>
+
+    <div class="search">
+      <input id="searchInput" type="text" placeholder="search artist, city, venue…" autocomplete="off" />
+    </div>
+
+    <nav class="filters" id="genreFilters"><!-- genre chips injected --></nav>
+
+    <button class="spotify-btn" id="spotifyBtn" title="connect spotify">
+      <span class="sp-logo">●</span> connect spotify
+    </button>
+    <button class="profile-btn" title="your boards">✦</button>
+  </header>
+
+  <!-- ===== Map ===== -->
+  <div id="map"></div>
+
+  <!-- ===== Left rail: feed of moments ===== -->
+  <aside class="feed" id="feed">
+    <div class="feed-head">
+      <h2>recently pinned</h2>
+      <span class="feed-count" id="feedCount">0</span>
+    </div>
+    <div class="feed-list" id="feedList"><!-- cards injected --></div>
+  </aside>
+
+  <!-- ===== Sound Map panel (after Spotify connect) ===== -->
+  <aside class="soundpanel" id="soundPanel" hidden>
+    <div class="sp-head">
+      <div>
+        <h2><span class="sp-logo">●</span> your sound map</h2>
+        <p class="sp-sub" id="soundSub">where your music lives</p>
+      </div>
+      <button class="sp-close" id="soundClose">✕</button>
+    </div>
+    <div class="sp-stats" id="soundStats"><!-- stat cards --></div>
+    <div class="sp-list" id="soundList"><!-- top artists --></div>
+  </aside>
+
+  <!-- ===== Spotify connect modal ===== -->
+  <div class="modal-scrim" id="spotifyModal" hidden>
+    <div class="sp-card">
+      <button class="modal-close" id="spotifyClose">✕</button>
+      <div class="sp-logo-big">●</div>
+      <h2>connect your Spotify</h2>
+      <p class="sp-card-sub">we'll map your most-streamed artists by where their sound comes from — and graph the geography of your taste.</p>
+      <button class="sp-connect" id="spotifyConnect">● connect with Spotify</button>
+      <p class="sp-demo-note">prototype: this loads a sample listening profile. real version uses Spotify OAuth + MusicBrainz origins.</p>
+    </div>
+  </div>
+
+  <!-- ===== Add-a-moment FAB ===== -->
+  <button class="fab" id="addBtn">
+    <span>＋</span> pin a moment
+  </button>
+
+  <!-- ===== Moment modal (player + story) ===== -->
+  <div class="modal-scrim" id="modal" hidden>
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-video" id="modalVideo"></div>
+      <div class="modal-body">
+        <div class="modal-tags" id="modalTags"></div>
+        <h2 id="modalArtist"></h2>
+        <p class="modal-meta" id="modalMeta"></p>
+        <blockquote class="modal-story" id="modalStory"></blockquote>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="modalYt">↗ open on youtube</button>
+          <button class="btn-save" id="modalSave">♥ <span id="saveCount"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Add-moment sheet ===== -->
+  <div class="sheet-scrim" id="sheet" hidden>
+    <form class="sheet-card" id="addForm">
+      <div class="sheet-grab"></div>
+      <h2>pin a moment</h2>
+      <p class="sheet-sub">drop a show that meant something. paste a youtube link — we embed it, we never re-host.</p>
+      <label>artist <input name="artist" required placeholder="Bad Bunny" /></label>
+      <div class="sheet-row">
+        <label>venue <input name="venue" required placeholder="Estadio La Plata" /></label>
+        <label>city <input name="city" required placeholder="Buenos Aires" /></label>
+      </div>
+      <div class="sheet-row">
+        <label>year <input name="year" required placeholder="2022" inputmode="numeric" /></label>
+        <label>genre
+          <select name="genre">
+            <option>reggaeton</option><option>pop</option><option>rock</option>
+            <option>hip-hop</option><option>electronic</option><option>indie</option>
+            <option>r&b</option><option>latin</option><option>other</option>
+          </select>
+        </label>
+      </div>
+      <label>youtube link <input name="yt" placeholder="https://youtube.com/watch?v=…" /></label>
+      <label>why it mattered <textarea name="story" rows="3" placeholder="the bass dropped and 80,000 people lost it at once…"></textarea></label>
+      <p class="sheet-hint" id="sheetHint">tip: click anywhere on the map first to set the location 📍</p>
+      <div class="sheet-actions">
+        <button type="button" class="btn-ghost" id="sheetCancel">cancel</button>
+        <button type="submit" class="btn-save">pin it</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="spotify.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
